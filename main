@@ -1,0 +1,31 @@
+import os
+
+def coin_change(amount, denominations):
+    denominations.sort(reverse=True)
+    count = 0
+    for denomination in denominations:
+        while amount >= denomination:
+            amount -= denomination
+            count += 1
+        return count
+    
+def main():
+    montant = float(input("Put Amount here: "))
+    dnm = input("Enter Coin Values, each one separated by a Space: ")
+    input_list_str = dnm.split()
+    denominations = [int(item) for item in input_list_str]
+    result = coin_change(montant, denominations)
+    if result == 0:
+        print("Minimal Coins Needed :-1")
+    else :
+        print("Minimal Coins Needed:", result)
+    input("Press Enter to Continue")
+    clear()
+    
+def clear():
+    os.system('cls')
+    main()
+
+if __name__ == "__main__":
+    main()
+    os.system('cls')
