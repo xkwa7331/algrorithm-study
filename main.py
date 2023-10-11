@@ -26,10 +26,10 @@ def main():
 
 
 def clear():
-    os.system("cls")
+    os.system("cls||clear")
     main()
 
 
 if __name__ == "__main__":
     main()
-    os.system("cls")
+    os.system("cls||clear")
