@@ -20,9 +20,11 @@ def main():
     input("Press Enter to Continue")
     clear()
 
+
 def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
     main()
+
 
 if __name__ == "__main__":
     main()
