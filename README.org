@@ -1,0 +1,120 @@
+#+title: Readme
+
+* DONE Coin change
+Dynamic algorithm test
+- amount :: The amount
+- coins :: The denomination
+#+begin_src python :results output pp
+max_amount = 99999999
+amount = 14
+coins = [2,5,7,10]
+dy = [max_amount] * (amount + 1)
+
+# Initialize obvious results.
+dy[0] = 0
+for coin in coins:
+	dy[coin] = 1
+
+# Create dynamic results table.
+for i in range(1, amount + 1):
+	if dy[i] == 1:
+		continue
+	count = max_amount
+	for j in range(1, i // 2 + 1):
+		if count > dy[j] + dy[i-j]:
+			count = dy[j] + dy[i-j]
+
+	dy[i] = count
+print(dy[amount] if count < max_amount else -1)
+print(dy)
+#+end_src
+
+#+RESULTS:
+: 2
+: [0, 99999999, 1, 99999999, 2, 1, 3, 1, 4, 2, 1, 3, 2, 4, 2]
+
+* test
+Next algo
+#+begin_src python :results output pp
+map_width = 20
+map_height = 20
+night_x = 3
+night_y = 3
+target_x = 10
+target_y = 10
+
+#+end_src
+
+** in js
+asdf
+#+begin_src js
+for (var i=0;i<11;i++) {
+	console.log(i);
+}
+return "end";
+#+end_src
+
+#+RESULTS:
+#+begin_example
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+'end'
+#+end_example
+
+** in iC
+#+begin_src C
+#include <stdio.h>
+
+int main() {
+	printf("asdfaa");
+	return 0;
+}
+#+end_src
+
+#+RESULTS:
+: asdfaa
+** uml
+#+begin_src plantuml :file api-create.png
+@startuml
+!theme materia
+
+autonumber
+
+actor 관리포탈
+boundary GlobalExceptionHandler
+boundary ApiController
+control ApiService
+database Cache
+entity RouteDefinitionRepository
+
+관리포탈 -> ApiController: API 등록 요청.
+ApiController -> ApiService: API 정보 전달.
+ApiService -> Cache: ROUTE_STORE에 API 정보 등록.
+ApiService <- Cache: Event Listener(Cluster 내 모든 인스턴스 대상) 호출.
+opt 수정 Event가 발생한 경우
+	ApiService -> RouteDefinitionRepository: 기존 API 삭제.
+end
+ApiService -> ApiService: Predicates 설정.
+ApiService -> ApiService: Filters 설정.
+opt 무결성 체크가 설정된 경우
+	ApiService -> ApiService: CacheRequestBody Filter 설정.
+end
+ApiService -> ApiService: 최우선 Filter로 TraceLog Filter(TRACE) 설정.
+ApiService -> ApiService: App별 사용 API 설정.
+ApiService -> ApiService: RewritePath Filter(Route Path 변경용) 설정.
+ApiService -> ApiService: 마지막 Filter로 TraceLog Filter(SPAN) 설정.
+ApiService -> RouteDefinitionRepository: 신규 API 저장.
+ApiController <-- ApiService: 성공 응답.
+관리포탈 <-- ApiController: 성공 응답.
+
+@enduml
+#+end_src
